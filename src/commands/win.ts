@@ -30,11 +30,11 @@ exports.run = (client: any, message: any, args: any) => {
 	const loserScore = file.get(`data.${loser}.score`);
 
 	if (winnerScore == loserScore) {
-		win(winner, loser, 25, message);
+		winlose(winner, loser, 25, message);
 	} else if (winnerScore < loserScore) {
-		win(winner, loser, 30, message);
+		winlose(winner, loser, 30, message);
 	} else { // winnerScore > loserScore
-		win(winner, loser, 20, message);
+		winlose(winner, loser, 20, message);
 	}
 }
 
@@ -49,7 +49,7 @@ const setup = (who: any, message: any) => {
 	file.save();
 }
 
-const win = (winner: any, loser: any, point: number, message: any) => {
+const win = (winner: any, point: number, message: any) => {
 	const file = editJsonFile(`${__dirname}/../../data.json`);
 	file.set(`data.${winner}.score`, file.get(`data.${winner}.score`) + point);
 	file.set(`data.${winner}.win`, file.get(`data.${winner}.win`) + 1);
@@ -59,7 +59,10 @@ const win = (winner: any, loser: any, point: number, message: any) => {
 		file.set(`data.${winner}.tier`, TIER[setTier(file.get(`data.${winner}.score`))]);
 	}
 	file.set(`data.${winner}.Odds`, (file.get(`data.${winner}.win`) / (file.get(`data.${winner}.win`) + file.get(`data.${winner}.lose`))) * 100);
-
+	file.save();
+}
+const lose = (loser: any, point: number, message: any) => {
+	const file = editJsonFile(`${__dirname}/../../data.json`);
 	if ((file.get(`data.${loser}.score`) - point) <= 0)
 		file.set(`data.${loser}.score`, 0);
 	else
@@ -74,4 +77,9 @@ const win = (winner: any, loser: any, point: number, message: any) => {
 
 	file.save();
 }
+const winlose = (winner: any, loser: any, point: number, message: any) => {
+	win(winner, point, message);
+	lose(loser, point, message);
+}
+
 exports.name = name;
