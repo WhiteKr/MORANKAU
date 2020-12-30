@@ -3,14 +3,15 @@ import editJsonFile from 'edit-json-file';
 const MASTER = require('../../option.json').MASTER;
 const PREFIX = require('../../option.json').PREFIX;
 const TIER = require('../../option.json').TIER;
-const setTier = require('../index').setTier;
+const setTier = require('./exportsFuntions').setTier;
+const initUsers = require('./exportsFuntions').initUsers;
 
 const name = 'win';
 const usage = `${PREFIX}${name} [@winner] to [@loser]`;
 
 exports.run = (client: any, message: any, args: any) => {
 	if (MASTER.indexOf(message.author.id) == -1) return;
-	const file = editJsonFile(`${__dirname}/../../data.json`);
+	const file = editJsonFile(`${__dirname}/../../data.json`, { stringify_width: 4 });
 
 	const mentions = message.mentions.users.array();
 	const winner = mentions[0];
@@ -21,10 +22,15 @@ exports.run = (client: any, message: any, args: any) => {
 		return;
 	}
 
-	if (file.get(`data.${winner}`) == undefined)
-		setup(winner, message);
-	if (file.get(`data.${loser}`) == undefined)
-		setup(loser, message);
+	let arr: any = [];
+	if (file.get(`data.${winner}`) == undefined || file.get(`data.${loser}`) == undefined) {
+		if (file.get(`data.${winner}`) == undefined)
+			arr.push(winner);
+		if (file.get(`data.${loser}`) == undefined)
+			arr.push(loser);
+		initUsers(arr);
+		console.log(`initUsers called!!!`);
+	}
 
 	const winnerScore = file.get(`data.${winner}.score`);
 	const loserScore = file.get(`data.${loser}.score`);
@@ -38,19 +44,8 @@ exports.run = (client: any, message: any, args: any) => {
 	}
 }
 
-const setup = (who: any, message: any) => {
-	const file = editJsonFile(`${__dirname}/../../data.json`);
-	file.set(`data.${who}.username`, who.username);
-	file.set(`data.${who}.score`, 0);
-	file.set(`data.${who}.tier`, TIER[setTier(file.get(`data.${who}.score`))]);
-	file.set(`data.${who}.win`, 0);
-	file.set(`data.${who}.lose`, 0);
-	file.set(`data.${who}.Odds`, 0);
-	file.save();
-}
-
 const win = (winner: any, point: number, message: any) => {
-	const file = editJsonFile(`${__dirname}/../../data.json`);
+	const file = editJsonFile(`${__dirname}/../../data.json`, { stringify_width: 4 });
 	file.set(`data.${winner}.score`, file.get(`data.${winner}.score`) + point);
 	file.set(`data.${winner}.win`, file.get(`data.${winner}.win`) + 1);
 	message.channel.send(`${winner.username}님이 점수를 얻었습니다! ${file.get(`data.${winner}.score`)}점(+${point})`);
@@ -62,7 +57,7 @@ const win = (winner: any, point: number, message: any) => {
 	file.save();
 }
 const lose = (loser: any, point: number, message: any) => {
-	const file = editJsonFile(`${__dirname}/../../data.json`);
+	const file = editJsonFile(`${__dirname}/../../data.json`, { stringify_width: 4 });
 	if ((file.get(`data.${loser}.score`) - point) <= 0)
 		file.set(`data.${loser}.score`, 0);
 	else

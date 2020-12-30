@@ -68,13 +68,3 @@ client.on('ready', () => {
 			index++;
 	}, 6000);
 });
-
-exports.setTier = (score: number) => {
-	const TIER = require('../option.json').TIER;
-	var res = 0;
-	if (score >= 0)
-		res = (score / 100) | 0;
-	if (res >= TIER.length)
-		res = TIER.length - 1;
-	return res;
-}

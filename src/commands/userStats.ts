@@ -7,7 +7,7 @@ const name = 'userstats';
 const usage = `${PREFIX}${name} [@mention]`;
 
 exports.run = (client: any, message: any, args: any) => {
-	const file = editJsonFile(`${__dirname}/../../data.json`);
+	const file = editJsonFile(`${__dirname}/../../data.json`, { stringify_width: 4 });
 
 	const who = message.mentions.users.first();
 	if (who == undefined) {

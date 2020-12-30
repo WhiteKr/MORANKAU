@@ -3,42 +3,42 @@ import editJsonFile from 'edit-json-file';
 const MASTER = require('../../option.json').MASTER;
 const PREFIX = require('../../option.json').PREFIX;
 const TIER = require('../../option.json').TIER;
-const setTier = require('../index').setTier;
+const setTier = require('./exportsFuntions').setTier;
+const initUsers = require('./exportsFuntions').initUsers;
 
-const name = 'pointDown';
+const name = 'pointdown';
 const usage = `${PREFIX}${name} [@mention]`;
 
 exports.run = (client: any, message: any, args: any) => {
 	if (MASTER.indexOf(message.author.id) == -1) return;
-	const file = editJsonFile(`${__dirname}/../../data.json`);
+	const file = editJsonFile(`${__dirname}/../../data.json`, { stringify_width: 4 });
 
-	const to = message.mentions.users.first();
+	const mentions = message.mentions.users.array();
+	const who = mentions[0];
+	console.log(`mentions: ${mentions}\nwho: ${who.tag}`);
 
-	if (args.length <= 1 || to == undefined) {
+	if (args.length <= 1 || who == undefined) {
 		message.channel.send(`사용법: \`${usage}\``);
 		return;
 	}
-
-	if (file.get(`data.${to}`) == undefined) {
-		file.set(`data.${to}.score`, 0);
-		file.set(`data.${to}.tier`, TIER[0]);
-		file.set(`data.${to}.win`, 0);
-		file.set(`data.${to}.lose`, 0);
-		file.set(`data.${to}.Odds`, 0);
+	if (file.get(`data.${who}`) == undefined) {
+		initUsers(mentions);
 	}
+
+	const whoFile = file.get(`data.${who}`);
+	console.log(`whofile: ${whoFile}`);
 
 	const point = 25;
-	file.set(`data.${to}.username`, `${to.username}`);
-	if (file.get(`data.${to}.score`) > 0)
-		file.set(`data.${to}.score`, file.get(`data.${to}.score`) - point);
-	message.channel.send(`점수가 떨어졌습니다. ${file.get(`data.${to}.score`)}점(-${point})`);
-	if (file.get(`data.${to}.tier`) != TIER[setTier(file.get(`data.${to}.score`))]) {
-		message.channel.send(`저런, 등급이 떨어졌습니다.\n${file.get(`data.${to}.tier`)} => ${TIER[setTier(file.get(`data.${to}.score`))]}`);
-		file.set(`data.${to}.tier`, TIER[setTier(file.get(`data.${to}.score`))]);
+	file.set(`data.${who}.username`, `${who.username}`);
+	if (file.get(`data.${who}.score`) > 0)
+		file.set(`data.${who}.score`, file.get(`data.${who}.score`) - point);
+	message.channel.send(`점수가 떨어졌습니다. ${file.get(`data.${who}.score`)}점(-${point})`);
+	if (file.get(`data.${who}.tier`) != TIER[setTier(file.get(`data.${who}.score`))]) {
+		message.channel.send(`저런, 등급이 떨어졌습니다.\n${file.get(`data.${who}.tier`)} => ${TIER[setTier(file.get(`data.${who}.score`))]}`);
+		file.set(`data.${who}.tier`, TIER[setTier(file.get(`data.${who}.score`))]);
 	}
-	file.set(`data.${to}.lose`, file.get(`data.${to}.lose`) + 1);
-	file.set(`data.${to}.Odds`, (file.get(`data.${to}.win`) / (file.get(`data.${to}.win`) + file.get(`data.${to}.lose`))) * 100);
-
+	file.set(`data.${who}.lose`, file.get(`data.${who}.lose`) + 1);
+	file.set(`data.${who}.Odds`, (file.get(`data.${who}.win`) / (file.get(`data.${who}.win`) + file.get(`data.${who}.lose`))) * 100);
 	file.save();
 }
-exports.name = name;
+// exports.name = name;
