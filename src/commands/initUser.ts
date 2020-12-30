@@ -11,8 +11,13 @@ const usage = `${PREFIX}${name} [@mention]`;
 exports.run = (client: any, message: any, args: any) => {
 	if (MASTER.indexOf(message.author.id) == -1) return;
 
-	const file = editJsonFile(`${__dirname}/../../data.json`);
 	const who = message.mentions.users.first();
+	if (who == undefined) {
+		message.channel.send(`사용법: \`${usage}\``);
+		return;
+	}
+
+	const file = editJsonFile(`${__dirname}/../../data.json`);
 	file.set(`data.${who}.username`, who.username);
 	file.set(`data.${who}.score`, 0);
 	file.set(`data.${who}.tier`, TIER[setTier(file.get(`data.${who}.score`))]);
