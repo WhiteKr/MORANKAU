@@ -25,5 +25,7 @@ exports.run = (client: any, message: any, args: any) => {
 	file.set(`data.${who}.lose`, 0);
 	file.set(`data.${who}.Odds`, 0);
 	file.save();
+
+	message.channel.send(`${who.tag}'s stats are reseted!`);
 }
 exports.name = name;
