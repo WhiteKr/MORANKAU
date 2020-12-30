@@ -35,7 +35,7 @@ client.on('message', (message: any) => {
 
 	if (cmd) {
 		if (message.channel.type == 'dm') {
-			console.log(`\n${message.author.tag} in ${message.channel.name} (DM)\n  ${message.content}\n`);
+			console.log(`\n${message.author.tag} (DM)\n  ${message.content}\n`);
 		} else {
 			console.log(`\n${message.author.tag} in ${message.channel.name} of ${message.guild.name}\n  ${message.content}\n`);
 		}
