@@ -17,7 +17,6 @@ commands.load = (dir: any) => {
 		const cmd = require(`./commands/${file}`);
 		commands.set(cmd.name, cmd);
 	}
-	// console.log(commands.map((c: any) => c.name).join(', ') + ' 명령어가 로드됨.');
 }
 
 // on message
