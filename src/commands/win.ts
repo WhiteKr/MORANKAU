@@ -32,17 +32,24 @@ exports.run = (client: any, message: any, args: any) => {
 		console.log(`initUsers called!!!`);
 	}
 
-	const winnerScore = file.get(`data.${winner}.score`);
-	const loserScore = file.get(`data.${loser}.score`);
-
-	if (winnerScore == loserScore) {
-		winlose(winner, loser, 25, message);
-	} else if (winnerScore < loserScore) {
-		winlose(winner, loser, 30, message);
-	} else { // winnerScore > loserScore
-		winlose(winner, loser, 20, message);
+	if (winner == undefined || loser == undefined) {
+		message.channel.send(`사용법: ${usage}`);
 	}
+
+	const winnerTier = file.get(`data.${winner}.tier`);
+	const loserTier = file.get(`data.${loser}.tier`);
+	const winnerTierIndex = TIER.indexOf(winnerTier);
+	const loserTierIndex = TIER.indexOf(loserTier);
+
+	const basicPoint = 25;
+	const tierGap = winnerTierIndex - loserTierIndex;
+	let point = Math.round(basicPoint * (1 + (0.2 * -tierGap)));
+	if (point < 1) point = 1;
+	if (point > 50) point = 50;
+
+	winlose(winner, loser, point, message);
 }
+exports.name = name;
 
 const win = (winner: any, point: number, message: any) => {
 	const file = editJsonFile(`${__dirname}/../../data.json`, { stringify_width: 4 });
@@ -69,12 +76,9 @@ const lose = (loser: any, point: number, message: any) => {
 		file.set(`data.${loser}.tier`, TIER[setTier(file.get(`data.${loser}.score`))]);
 	}
 	file.set(`data.${loser}.Odds`, (file.get(`data.${loser}.win`) / (file.get(`data.${loser}.win`) + file.get(`data.${loser}.lose`))) * 100);
-
 	file.save();
 }
 const winlose = (winner: any, loser: any, point: number, message: any) => {
 	win(winner, point, message);
 	lose(loser, point, message);
 }
-
-exports.name = name;
