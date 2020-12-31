@@ -11,7 +11,7 @@ exports.run = (client: any, message: any, args: any) => {
 	const statsEmbed = new Discord.MessageEmbed()
 		.setColor('#0099ff')
 		.setTitle(`${message.author.username}'s Stats`)
-		.setAuthor(`${message.author.tag}`, `${message.author.avatarURL()}`)
+		.setAuthor(`${message.author.tag}`, `${message.author.displayAvatarURL()}`)
 		.setTimestamp()
 		.setFooter('MORDHAU Stats');
 	if (file.get(`data.${message.author.id}`) == undefined) {

@@ -14,13 +14,16 @@ exports.run = (client: any, message: any, args: any) => {
 		message.channel.send(`사용법: \`${usage}\``);
 		return;
 	}
+	if (who == null) {
+		message.channel.send(`There is an issue what 'userstats' command don't catch users who joined this server after made this command.\nWill fix as fast as possible. Thank you.`);
+	}
 
 	const tier = file.get(`data.${who}.tier`);
 	const tierAttachment: any = new Discord.MessageAttachment(`./src/tierImages/${tier}.png`, `${tier}.png`);
 	const statsEmbed = new Discord.MessageEmbed()
 		.setColor('#0099ff')
 		.setTitle(`${who.username}'s Stats`)
-		.setAuthor(`${who.tag}`, `${who.avatarURL()}`)
+		.setAuthor(`${who.tag}`, `${who.displayAvatarURL()}`)
 		.setTimestamp()
 		.setFooter('MORDHAU Stats');
 	if (file.get(`data.${who}`) == undefined) {
