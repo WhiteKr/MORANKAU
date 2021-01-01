@@ -26,17 +26,24 @@ client.on('message', (message: any) => {
 
 	commands.load(__dirname + "/commands");
 
-	const args = message.content.slice(PREFIX.length).trim().split(/ +/g); // !명령어 어쩌구 저쩌구 
+	const args = message.content.slice(PREFIX.length).trim().split(/ +/g);
 	const command = args[0];
 
 	let cmd = commands.get(command);
 	//get는 컬렉션 내에 해당 key 값을 가진 데이터가 없으면 false 값을 반환하므로 부분적으로 Collection#has처럼 사용할수 있습니다.
 
 	if (cmd) {
+		const date = new Date();
+		const month = date.getMonth() + 1;
+		const day = date.getDate();
+		const hour = date.getHours();
+		const minute = date.getMinutes();
+		const second = date.getSeconds();
+		const timeInfo = `${month}.${day}. ${hour}:${minute}:${second}`;
 		if (message.channel.type == 'dm') {
-			console.log(`\n${message.author.tag} (DM)\n  ${message.content}\n`);
+			console.log(`\n${message.author.tag} (DM) (${timeInfo})\n  ${message.content}\n`);
 		} else {
-			console.log(`\n${message.author.tag} in ${message.channel.name} of ${message.guild.name}\n  ${message.content}\n`);
+			console.log(`\n${message.author.tag} in ${message.channel.name} of ${message.guild.name} (${timeInfo})\n  ${message.content}\n`);
 		}
 		cmd.run(client, message, args);
 	}
