@@ -115,20 +115,6 @@ function winlose(winner: any, loser: any, message: any, repeatTime: number) {
 		loserTotalPoint += lose(loser, point);
 
 		if (i == repeatTime - 1) {
-			// if (repeatTime != 1)
-			// 	message.channel.send(`Result of <@${winner}> won to <@${loser}> ${repeatTime} times:`);
-			// else
-			// 	message.channel.send(`Result of <@${winner}> won to <@${loser}>:`);
-
-			// const file = editJsonFile(`${__dirname}/../../data.json`, { stringify_width: 4 });
-			// message.channel.send(`${winner.username} got point! ${file.get(`data.${winner}.score`)} points(+${winnerTotalPoint})`);
-			// if (winnerBeforeTier != TIER[setTier(file.get(`data.${winner}.score`))])
-			// 	message.channel.send(`${winner.username}님이 승급하였습니다!\n${winnerBeforeTier} => ${TIER[setTier(file.get(`data.${winner}.score`))]}`);
-
-			// message.channel.send(`${loser.username} lost points.. ${file.get(`data.${loser}.score`)}점(-${loserTotalPoint})`);
-			// if (loserBeforeTier != TIER[setTier(file.get(`data.${loser}.score`))])
-			// 	message.channel.send(`${loser.username}님의 등급이 내려갔습니다..\n${loserBeforeTier} => ${TIER[setTier(file.get(`data.${loser}.score`))]}`);
-
 			let embedTitle = 'Result of Match';
 			if (repeatTime != 1)
 				embedTitle += 'es';
