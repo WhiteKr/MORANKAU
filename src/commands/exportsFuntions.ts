@@ -13,7 +13,7 @@ exports.setTier = (score: number) => {
 
 exports.initUsers = (whos: Array<any>) => {
 	const setTier = require('./exportsFuntions').setTier;
-	const file = editJsonFile(`${__dirname}/../../data.json`, { stringify_width: 4 });
+	const file = editJsonFile(`../../data.json`, { stringify_width: 4 });
 	for (let i = 0; i < whos.length; i++) {
 		file.set(`data.${whos[i]}.username`, whos[i].username);
 		file.set(`data.${whos[i]}.score`, 200);

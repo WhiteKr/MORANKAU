@@ -4,7 +4,7 @@ import editJsonFile from 'edit-json-file';
 const name = 'stats';
 
 exports.run = (client: any, message: any, args: any) => {
-	const file = editJsonFile(`${__dirname}/../../data.json`, { stringify_width: 4 });
+	const file = editJsonFile(`../../data.json`, { stringify_width: 4 });
 
 	const tier = file.get(`data.${message.author.id}.tier`);
 	const tierAttachment: any = new Discord.MessageAttachment(`./src/tierImages/${tier}.png`, `${tier}.png`);

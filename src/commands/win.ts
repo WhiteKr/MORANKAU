@@ -12,7 +12,7 @@ const usage = `${PREFIX}${name} [@winner] to [@loser]`;
 
 exports.run = (client: any, message: any, args: any) => {
 	if (MASTER.indexOf(message.author.id) == -1) return;
-	const file = editJsonFile(`${__dirname}/../../data.json`, { stringify_width: 4 });
+	const file = editJsonFile(`../../data.json`, { stringify_width: 4 });
 
 	const mentions = message.mentions.users.array();
 	const winner = mentions[0];
@@ -67,7 +67,7 @@ function setPointByTierGap(winnerTier: any, loserTier: any) {
 }
 
 function win(winner: any, point: any) {
-	const file = editJsonFile(`${__dirname}/../../data.json`, { stringify_width: 4 });
+	const file = editJsonFile(`../../data.json`, { stringify_width: 4 });
 
 	file.set(`data.${winner}.score`, file.get(`data.${winner}.score`) + point);
 	file.set(`data.${winner}.win`, file.get(`data.${winner}.win`) + 1);
@@ -81,7 +81,7 @@ function win(winner: any, point: any) {
 }
 
 function lose(loser: any, point: any) {
-	const file = editJsonFile(`${__dirname}/../../data.json`, { stringify_width: 4 });
+	const file = editJsonFile(`../../data.json`, { stringify_width: 4 });
 
 	file.set(`data.${loser}.score`, file.get(`data.${loser}.score`) - point);
 	if (file.get(`data.${loser}.score`) <= 0)
@@ -98,7 +98,7 @@ function lose(loser: any, point: any) {
 }
 
 function winlose(winner: any, loser: any, message: any, repeatTime: number) {
-	const file = editJsonFile(`${__dirname}/../../data.json`, { stringify_width: 4 });
+	const file = editJsonFile(`../../data.json`, { stringify_width: 4 });
 	const winnerBeforeTier = file.get(`data.${winner}.tier`);
 	const loserBeforeTier = file.get(`data.${loser}.tier`);
 
@@ -109,7 +109,7 @@ function winlose(winner: any, loser: any, message: any, repeatTime: number) {
 		repeatTime = 1;
 	}
 	for (let i = 0; i < repeatTime; i++) {
-		const file = editJsonFile(`${__dirname}/../../data.json`, { stringify_width: 4 });
+		const file = editJsonFile(`../../data.json`, { stringify_width: 4 });
 		const point = setPointByTierGap(file.get(`data.${winner}.tier`), file.get(`data.${loser}.tier`));
 		winnerTotalPoint += win(winner, point);
 		loserTotalPoint += lose(loser, point);

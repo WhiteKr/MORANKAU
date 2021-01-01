@@ -7,7 +7,7 @@ const name = 'gap';
 const usage = `${PREFIX}${name} [@winner] [@loser]`;
 
 exports.run = (client: any, message: any, args: any) => {
-	const file = editJsonFile(`${__dirname}/../../data.json`, { stringify_width: 4 });
+	const file = editJsonFile(`../../data.json`, { stringify_width: 4 });
 
 	const mentions = message.mentions.users.array();
 	const winner = mentions[0];

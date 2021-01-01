@@ -21,7 +21,7 @@ exports.run = (client: any, message: any, args: any) => {
 		return;
 	}
 	{
-		const file = editJsonFile(`${__dirname}/../../data.json`, { stringify_width: 4 });
+		const file = editJsonFile(`../../data.json`, { stringify_width: 4 });
 		if (file.get(`data.${who}`) == undefined) {
 			initUsers(mentions);
 			file.save();
@@ -29,7 +29,7 @@ exports.run = (client: any, message: any, args: any) => {
 	}
 
 	{
-		const file = editJsonFile(`${__dirname}/../../data.json`, { stringify_width: 4 });
+		const file = editJsonFile(`../../data.json`, { stringify_width: 4 });
 		console.log(`whofile: ${file.get(`data.${who}`)}`);
 
 		const point = 25;

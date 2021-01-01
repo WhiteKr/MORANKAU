@@ -11,7 +11,7 @@ const usage = `${PREFIX}${name} [@mention]`;
 
 exports.run = (client: any, message: any, args: any) => {
 	if (MASTER.indexOf(message.author.id) == -1) return;
-	const file = editJsonFile(`${__dirname}/../../data.json`, { stringify_width: 4 });
+	const file = editJsonFile(`../../data.json`, { stringify_width: 4 });
 
 	const mentions = message.mentions.users.array();
 	const who = mentions[0];
