@@ -129,12 +129,14 @@ function winlose(winner: any, loser: any, message: any, repeatTime: number) {
 			// if (loserBeforeTier != TIER[setTier(file.get(`data.${loser}.score`))])
 			// 	message.channel.send(`${loser.username}님의 등급이 내려갔습니다..\n${loserBeforeTier} => ${TIER[setTier(file.get(`data.${loser}.score`))]}`);
 
+			let embedTitle = 'Result of Match';
+			if (repeatTime != 1)
+				embedTitle += 'es';
 			const winloseEmbed = new Discord.MessageEmbed()
 				.setColor('#0099ff')
-				.setTitle('Result of match')
-				.setAuthor(`${message.author.tag}`, `${message.author.displayAvatarURL()}`)
+				.setTitle(embedTitle)
 				.setTimestamp()
-				.setFooter('Result of MORDHAU Duel Match');
+				.setFooter(message.author.tag, message.author.displayAvatarURL());
 			let winnerEmbedText = `Points Increased to ${file.get(`data.${winner}.score`)}(+${winnerTotalPoint}).`;
 			if (winnerBeforeTier != TIER[setTier(file.get(`data.${winner}.score`))])
 				winnerEmbedText += `\nTier Promoted to ${TIER[setTier(file.get(`data.${winner}.score`))]} (was ${winnerBeforeTier}).`;
