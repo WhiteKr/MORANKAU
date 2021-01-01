@@ -20,12 +20,32 @@ exports.run = (client: any, message: any, args: any) => {
 		statsEmbed.attachFiles(tierAttachment)
 			.setThumbnail(`attachment://${tier}.png`)
 			.addFields(
-				{ name: 'Score', value: file.get(`data.${message.author.id}.score`), inline: true },
-				{ name: 'Tier', value: file.get(`data.${message.author.id}.tier`), inline: true },
+				{
+					name: 'Score',
+					value: file.get(`data.${message.author.id}.score`),
+					inline: true
+				},
+				{
+					name: 'Tier',
+					value: file.get(`data.${message.author.id}.tier`),
+					inline: true
+				},
 				{ name: '\u200B', value: '\u200B', inline: true },
-				{ name: 'win', value: file.get(`data.${message.author.id}.win`), inline: true },
-				{ name: 'lose', value: file.get(`data.${message.author.id}.lose`), inline: true },
-				{ name: 'Odds', value: `${file.get(`data.${message.author.id}.Odds`).toFixed(2)}%`, inline: true },
+				{
+					name: 'win',
+					value: file.get(`data.${message.author.id}.win`),
+					inline: true
+				},
+				{
+					name: 'lose',
+					value: file.get(`data.${message.author.id}.lose`),
+					inline: true
+				},
+				{
+					name: 'Odds',
+					value: `${file.get(`data.${message.author.id}.Odds`).toFixed(2)}%`,
+					inline: true
+				},
 			);
 	}
 	message.channel.send(statsEmbed);
