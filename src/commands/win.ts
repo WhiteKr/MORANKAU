@@ -30,7 +30,6 @@ exports.run = (client: any, message: any, args: any) => {
 		if (file.get(`data.${loser}`) == undefined)
 			arr.push(loser);
 		initUsers(arr);
-		console.log(`initUsers called!!!`);
 	}
 
 	if (winner == undefined || loser == undefined) {
@@ -48,7 +47,6 @@ exports.run = (client: any, message: any, args: any) => {
 			repeatTime = args[4];
 		}
 	}
-	console.log(`repeatTime = ${repeatTime}`);
 	winlose(winner, loser, message, repeatTime);
 }
 exports.name = name;
@@ -76,7 +74,6 @@ function win(winner: any, point: any) {
 	}
 	file.set(`data.${winner}.Odds`, (file.get(`data.${winner}.win`) / (file.get(`data.${winner}.win`) + file.get(`data.${winner}.lose`))) * 100);
 	file.save();
-	console.log(`winner - ${point}`);
 	return point;
 }
 
@@ -92,8 +89,6 @@ function lose(loser: any, point: any) {
 	}
 	file.set(`data.${loser}.Odds`, (file.get(`data.${loser}.win`) / (file.get(`data.${loser}.win`) + file.get(`data.${loser}.lose`))) * 100);
 	file.save();
-
-	console.log(`loser - ${point}`);
 	return point;
 }
 

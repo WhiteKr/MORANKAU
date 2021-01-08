@@ -11,10 +11,10 @@ const usage = `${PREFIX}${name} [@mention]`;
 
 exports.run = (client: any, message: any, args: any) => {
 	if (MASTER.indexOf(message.author.id) == -1) return;
+	const file = editJsonFile(`../../data.json`, { stringify_width: 4 });
 
 	const mentions = message.mentions.users.array();
 	const who = mentions[0];
-	console.log(`mentions: ${mentions}\nwho: ${who.tag}`);
 
 	if (args.length <= 1 || who == undefined) {
 		message.channel.send(`사용법: \`${usage}\``);
@@ -24,14 +24,10 @@ exports.run = (client: any, message: any, args: any) => {
 		const file = editJsonFile(`../../data.json`, { stringify_width: 4 });
 		if (file.get(`data.${who}`) == undefined) {
 			initUsers(mentions);
-			file.save();
 		}
 	}
 
 	{
-		const file = editJsonFile(`../../data.json`, { stringify_width: 4 });
-		console.log(`whofile: ${file.get(`data.${who}`)}`);
-
 		const point = 25;
 		file.set(`data.${who}.username`, `${who.username}`);
 		file.set(`data.${who}.score`, file.get(`data.${who}.score`) + point);
