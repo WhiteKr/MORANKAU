@@ -17,13 +17,17 @@ TypeScript로 개발된 Discord 전용 챗봇입니다.
 
 ## 기능별 설명/사용법
 
+### json 파일
+- 모든 유저 정보들은 json 파일에 정리되어 저장됩니다.
+- 아래의 명령어 중 사용자의 데이터 조정과 관련된 명령어들은 기본적으로 데이터를 찾을 수 없을 때 알아서 초기값으로 데이터를 생성합니다.
+
 ### gapPoint.ts
 - 사용법: `gap [@winner] [@loser]
 - 입력받은 승자와 패자의 티어 차이를 알려줍니다.
 
 ### initUser.ts
 - 사용법: `init ([@mentions...] | @everyone)
-- 언급된 대상의 저장된 데이터를 모두 초기화합니다.
+- 언급된 대상의 데이터를 모두 초기값으로 초기화합니다. 없을 시 추가합니다.
 
 ### pointDown.ts
 - 사용법: `pointdown [@mention]
@@ -49,6 +53,7 @@ TypeScript로 개발된 Discord 전용 챗봇입니다.
 - 사용법: `userstats [@mention]
 - 언급된 대상의 스탯을 보여줍니다.
 - 점수, 랭크, 승리/패배 횟수, 승률 등을 Embed로 보여줍니다.
+- 저장된 정보가 없을 경우에도 Embed로 알립니다.
 
 ### win.ts
 - 사용법: `win [@winner] to [@loser]
